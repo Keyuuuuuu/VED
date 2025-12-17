@@ -1,0 +1,19 @@
+Classification Report - Conformer V3.1
+============================================================
+              precision    recall  f1-score   support
+
+         ANG     0.7424    0.8264    0.7821       265
+         DIS     0.6681    0.5698    0.6151       265
+         FEA     0.5953    0.6717    0.6312       265
+         HAP     0.6725    0.5811    0.6235       265
+         NEU     0.7273    0.8106    0.7667       227
+         SAD     0.6240    0.5887    0.6058       265
+
+    accuracy                         0.6714      1552
+   macro avg     0.6716    0.6747    0.6707      1552
+weighted avg     0.6702    0.6714    0.6684      1552
+
+Summary:
+  Accuracy:    0.6714
+  Macro F1:    0.6707
+  Weighted F1: 0.6684

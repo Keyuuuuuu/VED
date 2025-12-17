@@ -1,0 +1,41 @@
+# --- 1. 基础配置 (必须有) ---
+.idea/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- 2. 忽略虚拟环境 (由你本地生成，别人不需要) ---
+venv/
+env/
+.env/
+
+# --- 3. 忽略模型权重 (这些通常几百MB到几GB) ---
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.onnx
+*.safetensors
+*.pkl
+*.bin
+# 如果你有专门存放模型的文件夹，也可以直接忽略文件夹
+checkpoints/
+weights/
+models/
+
+# --- 4. 忽略数据集 (你的 .wav 文件) ---
+*.wav
+*.mp3
+*.flac
+*.json
+# 强烈建议直接忽略存放数据的整个文件夹
+data/
+dataset/
+datasets/
+raw_data/
+processed_data/
+
+# --- 5. 忽略其他常见大文件 ---
+*.log
+*.zip
+*.tar.gz

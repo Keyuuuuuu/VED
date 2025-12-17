@@ -1,0 +1,279 @@
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                Output Shape                 Param #   Connected to                  
+==================================================================================================
+ input_1 (InputLayer)        [(None, 300, 64, 1)]         0         []                            
+                                                                                                  
+ gaussian_noise (GaussianNo  (None, 300, 64, 1)           0         ['input_1[0][0]']             
+ ise)                                                                                             
+                                                                                                  
+ spec_augment (SpecAugment)  (None, 300, 64, 1)           0         ['gaussian_noise[0][0]']      
+                                                                                                  
+ conv2d (Conv2D)             (None, 300, 64, 32)          320       ['spec_augment[0][0]']        
+                                                                                                  
+ conv2d_1 (Conv2D)           (None, 300, 64, 32)          832       ['spec_augment[0][0]']        
+                                                                                                  
+ conv2d_2 (Conv2D)           (None, 300, 64, 32)          1600      ['spec_augment[0][0]']        
+                                                                                                  
+ concatenate (Concatenate)   (None, 300, 64, 96)          0         ['conv2d[0][0]',              
+                                                                     'conv2d_1[0][0]',            
+                                                                     'conv2d_2[0][0]']            
+                                                                                                  
+ batch_normalization (Batch  (None, 300, 64, 96)          384       ['concatenate[0][0]']         
+ Normalization)                                                                                   
+                                                                                                  
+ global_average_pooling2d (  (None, 96)                   0         ['batch_normalization[0][0]'] 
+ GlobalAveragePooling2D)                                                                          
+                                                                                                  
+ dense (Dense)               (None, 12)                   1164      ['global_average_pooling2d[0][
+                                                                    0]']                          
+                                                                                                  
+ dense_1 (Dense)             (None, 96)                   1248      ['dense[0][0]']               
+                                                                                                  
+ reshape (Reshape)           (None, 1, 1, 96)             0         ['dense_1[0][0]']             
+                                                                                                  
+ multiply (Multiply)         (None, 300, 64, 96)          0         ['batch_normalization[0][0]', 
+                                                                     'reshape[0][0]']             
+                                                                                                  
+ max_pooling2d (MaxPooling2  (None, 150, 32, 96)          0         ['multiply[0][0]']            
+ D)                                                                                               
+                                                                                                  
+ conv2d_3 (Conv2D)           (None, 150, 32, 128)         110720    ['max_pooling2d[0][0]']       
+                                                                                                  
+ batch_normalization_1 (Bat  (None, 150, 32, 128)         512       ['conv2d_3[0][0]']            
+ chNormalization)                                                                                 
+                                                                                                  
+ global_average_pooling2d_1  (None, 128)                  0         ['batch_normalization_1[0][0]'
+  (GlobalAveragePooling2D)                                          ]                             
+                                                                                                  
+ dense_2 (Dense)             (None, 16)                   2064      ['global_average_pooling2d_1[0
+                                                                    ][0]']                        
+                                                                                                  
+ dense_3 (Dense)             (None, 128)                  2176      ['dense_2[0][0]']             
+                                                                                                  
+ reshape_1 (Reshape)         (None, 1, 1, 128)            0         ['dense_3[0][0]']             
+                                                                                                  
+ multiply_1 (Multiply)       (None, 150, 32, 128)         0         ['batch_normalization_1[0][0]'
+                                                                    , 'reshape_1[0][0]']          
+                                                                                                  
+ max_pooling2d_1 (MaxPoolin  (None, 75, 16, 128)          0         ['multiply_1[0][0]']          
+ g2D)                                                                                             
+                                                                                                  
+ spatial_dropout2d (Spatial  (None, 75, 16, 128)          0         ['max_pooling2d_1[0][0]']     
+ Dropout2D)                                                                                       
+                                                                                                  
+ conv2d_4 (Conv2D)           (None, 75, 16, 256)          295168    ['spatial_dropout2d[0][0]']   
+                                                                                                  
+ batch_normalization_2 (Bat  (None, 75, 16, 256)          1024      ['conv2d_4[0][0]']            
+ chNormalization)                                                                                 
+                                                                                                  
+ global_average_pooling2d_2  (None, 256)                  0         ['batch_normalization_2[0][0]'
+  (GlobalAveragePooling2D)                                          ]                             
+                                                                                                  
+ dense_4 (Dense)             (None, 32)                   8224      ['global_average_pooling2d_2[0
+                                                                    ][0]']                        
+                                                                                                  
+ dense_5 (Dense)             (None, 256)                  8448      ['dense_4[0][0]']             
+                                                                                                  
+ reshape_2 (Reshape)         (None, 1, 1, 256)            0         ['dense_5[0][0]']             
+                                                                                                  
+ multiply_2 (Multiply)       (None, 75, 16, 256)          0         ['batch_normalization_2[0][0]'
+                                                                    , 'reshape_2[0][0]']          
+                                                                                                  
+ max_pooling2d_2 (MaxPoolin  (None, 37, 8, 256)           0         ['multiply_2[0][0]']          
+ g2D)                                                                                             
+                                                                                                  
+ spatial_dropout2d_1 (Spati  (None, 37, 8, 256)           0         ['max_pooling2d_2[0][0]']     
+ alDropout2D)                                                                                     
+                                                                                                  
+ reshape_3 (Reshape)         (None, 37, 2048)             0         ['spatial_dropout2d_1[0][0]'] 
+                                                                                                  
+ dense_6 (Dense)             (None, 37, 128)              262272    ['reshape_3[0][0]']           
+                                                                                                  
+ dropout (Dropout)           (None, 37, 128)              0         ['dense_6[0][0]']             
+                                                                                                  
+ dense_7 (Dense)             (None, 37, 512)              66048     ['dropout[0][0]']             
+                                                                                                  
+ dropout_1 (Dropout)         (None, 37, 512)              0         ['dense_7[0][0]']             
+                                                                                                  
+ dense_8 (Dense)             (None, 37, 128)              65664     ['dropout_1[0][0]']           
+                                                                                                  
+ dropout_2 (Dropout)         (None, 37, 128)              0         ['dense_8[0][0]']             
+                                                                                                  
+ tf.math.multiply (TFOpLamb  (None, 37, 128)              0         ['dropout_2[0][0]']           
+ da)                                                                                              
+                                                                                                  
+ tf.__operators__.add (TFOp  (None, 37, 128)              0         ['dropout[0][0]',             
+ Lambda)                                                             'tf.math.multiply[0][0]']    
+                                                                                                  
+ layer_normalization (Layer  (None, 37, 128)              256       ['tf.__operators__.add[0][0]']
+ Normalization)                                                                                   
+                                                                                                  
+ multi_head_attention (Mult  (None, 37, 128)              66048     ['layer_normalization[0][0]', 
+ iHeadAttention)                                                     'layer_normalization[0][0]'] 
+                                                                                                  
+ tf.__operators__.add_1 (TF  (None, 37, 128)              0         ['layer_normalization[0][0]', 
+ OpLambda)                                                           'multi_head_attention[0][0]']
+                                                                                                  
+ layer_normalization_1 (Lay  (None, 37, 128)              256       ['tf.__operators__.add_1[0][0]
+ erNormalization)                                                   ']                            
+                                                                                                  
+ conv1d (Conv1D)             (None, 37, 256)              33024     ['layer_normalization_1[0][0]'
+                                                                    ]                             
+                                                                                                  
+ tf.__operators__.getitem_1  (None, 37, 128)              0         ['conv1d[0][0]']              
+  (SlicingOpLambda)                                                                               
+                                                                                                  
+ tf.__operators__.getitem (  (None, 37, 128)              0         ['conv1d[0][0]']              
+ SlicingOpLambda)                                                                                 
+                                                                                                  
+ tf.math.sigmoid (TFOpLambd  (None, 37, 128)              0         ['tf.__operators__.getitem_1[0
+ a)                                                                 ][0]']                        
+                                                                                                  
+ tf.math.multiply_1 (TFOpLa  (None, 37, 128)              0         ['tf.__operators__.getitem[0][
+ mbda)                                                              0]',                          
+                                                                     'tf.math.sigmoid[0][0]']     
+                                                                                                  
+ depthwise_conv1d (Depthwis  (None, 37, 128)              2048      ['tf.math.multiply_1[0][0]']  
+ eConv1D)                                                                                         
+                                                                                                  
+ batch_normalization_3 (Bat  (None, 37, 128)              512       ['depthwise_conv1d[0][0]']    
+ chNormalization)                                                                                 
+                                                                                                  
+ activation (Activation)     (None, 37, 128)              0         ['batch_normalization_3[0][0]'
+                                                                    ]                             
+                                                                                                  
+ conv1d_1 (Conv1D)           (None, 37, 128)              16512     ['activation[0][0]']          
+                                                                                                  
+ dropout_3 (Dropout)         (None, 37, 128)              0         ['conv1d_1[0][0]']            
+                                                                                                  
+ tf.__operators__.add_2 (TF  (None, 37, 128)              0         ['layer_normalization_1[0][0]'
+ OpLambda)                                                          , 'dropout_3[0][0]']          
+                                                                                                  
+ layer_normalization_2 (Lay  (None, 37, 128)              256       ['tf.__operators__.add_2[0][0]
+ erNormalization)                                                   ']                            
+                                                                                                  
+ dense_9 (Dense)             (None, 37, 512)              66048     ['layer_normalization_2[0][0]'
+                                                                    ]                             
+                                                                                                  
+ dropout_4 (Dropout)         (None, 37, 512)              0         ['dense_9[0][0]']             
+                                                                                                  
+ dense_10 (Dense)            (None, 37, 128)              65664     ['dropout_4[0][0]']           
+                                                                                                  
+ dropout_5 (Dropout)         (None, 37, 128)              0         ['dense_10[0][0]']            
+                                                                                                  
+ tf.math.multiply_2 (TFOpLa  (None, 37, 128)              0         ['dropout_5[0][0]']           
+ mbda)                                                                                            
+                                                                                                  
+ tf.__operators__.add_3 (TF  (None, 37, 128)              0         ['layer_normalization_2[0][0]'
+ OpLambda)                                                          , 'tf.math.multiply_2[0][0]'] 
+                                                                                                  
+ layer_normalization_3 (Lay  (None, 37, 128)              256       ['tf.__operators__.add_3[0][0]
+ erNormalization)                                                   ']                            
+                                                                                                  
+ dense_11 (Dense)            (None, 37, 512)              66048     ['layer_normalization_3[0][0]'
+                                                                    ]                             
+                                                                                                  
+ dropout_6 (Dropout)         (None, 37, 512)              0         ['dense_11[0][0]']            
+                                                                                                  
+ dense_12 (Dense)            (None, 37, 128)              65664     ['dropout_6[0][0]']           
+                                                                                                  
+ dropout_7 (Dropout)         (None, 37, 128)              0         ['dense_12[0][0]']            
+                                                                                                  
+ tf.math.multiply_3 (TFOpLa  (None, 37, 128)              0         ['dropout_7[0][0]']           
+ mbda)                                                                                            
+                                                                                                  
+ tf.__operators__.add_4 (TF  (None, 37, 128)              0         ['layer_normalization_3[0][0]'
+ OpLambda)                                                          , 'tf.math.multiply_3[0][0]'] 
+                                                                                                  
+ layer_normalization_4 (Lay  (None, 37, 128)              256       ['tf.__operators__.add_4[0][0]
+ erNormalization)                                                   ']                            
+                                                                                                  
+ multi_head_attention_1 (Mu  (None, 37, 128)              66048     ['layer_normalization_4[0][0]'
+ ltiHeadAttention)                                                  , 'layer_normalization_4[0][0]
+                                                                    ']                            
+                                                                                                  
+ tf.__operators__.add_5 (TF  (None, 37, 128)              0         ['layer_normalization_4[0][0]'
+ OpLambda)                                                          , 'multi_head_attention_1[0][0
+                                                                    ]']                           
+                                                                                                  
+ layer_normalization_5 (Lay  (None, 37, 128)              256       ['tf.__operators__.add_5[0][0]
+ erNormalization)                                                   ']                            
+                                                                                                  
+ conv1d_2 (Conv1D)           (None, 37, 256)              33024     ['layer_normalization_5[0][0]'
+                                                                    ]                             
+                                                                                                  
+ tf.__operators__.getitem_3  (None, 37, 128)              0         ['conv1d_2[0][0]']            
+  (SlicingOpLambda)                                                                               
+                                                                                                  
+ tf.__operators__.getitem_2  (None, 37, 128)              0         ['conv1d_2[0][0]']            
+  (SlicingOpLambda)                                                                               
+                                                                                                  
+ tf.math.sigmoid_1 (TFOpLam  (None, 37, 128)              0         ['tf.__operators__.getitem_3[0
+ bda)                                                               ][0]']                        
+                                                                                                  
+ tf.math.multiply_4 (TFOpLa  (None, 37, 128)              0         ['tf.__operators__.getitem_2[0
+ mbda)                                                              ][0]',                        
+                                                                     'tf.math.sigmoid_1[0][0]']   
+                                                                                                  
+ depthwise_conv1d_1 (Depthw  (None, 37, 128)              2048      ['tf.math.multiply_4[0][0]']  
+ iseConv1D)                                                                                       
+                                                                                                  
+ batch_normalization_4 (Bat  (None, 37, 128)              512       ['depthwise_conv1d_1[0][0]']  
+ chNormalization)                                                                                 
+                                                                                                  
+ activation_1 (Activation)   (None, 37, 128)              0         ['batch_normalization_4[0][0]'
+                                                                    ]                             
+                                                                                                  
+ conv1d_3 (Conv1D)           (None, 37, 128)              16512     ['activation_1[0][0]']        
+                                                                                                  
+ dropout_8 (Dropout)         (None, 37, 128)              0         ['conv1d_3[0][0]']            
+                                                                                                  
+ tf.__operators__.add_6 (TF  (None, 37, 128)              0         ['layer_normalization_5[0][0]'
+ OpLambda)                                                          , 'dropout_8[0][0]']          
+                                                                                                  
+ layer_normalization_6 (Lay  (None, 37, 128)              256       ['tf.__operators__.add_6[0][0]
+ erNormalization)                                                   ']                            
+                                                                                                  
+ dense_13 (Dense)            (None, 37, 512)              66048     ['layer_normalization_6[0][0]'
+                                                                    ]                             
+                                                                                                  
+ dropout_9 (Dropout)         (None, 37, 512)              0         ['dense_13[0][0]']            
+                                                                                                  
+ dense_14 (Dense)            (None, 37, 128)              65664     ['dropout_9[0][0]']           
+                                                                                                  
+ dropout_10 (Dropout)        (None, 37, 128)              0         ['dense_14[0][0]']            
+                                                                                                  
+ tf.math.multiply_5 (TFOpLa  (None, 37, 128)              0         ['dropout_10[0][0]']          
+ mbda)                                                                                            
+                                                                                                  
+ tf.__operators__.add_7 (TF  (None, 37, 128)              0         ['layer_normalization_6[0][0]'
+ OpLambda)                                                          , 'tf.math.multiply_5[0][0]'] 
+                                                                                                  
+ layer_normalization_7 (Lay  (None, 37, 128)              256       ['tf.__operators__.add_7[0][0]
+ erNormalization)                                                   ']                            
+                                                                                                  
+ dense_15 (Dense)            (None, 37, 1)                129       ['layer_normalization_7[0][0]'
+                                                                    ]                             
+                                                                                                  
+ softmax (Softmax)           (None, 37, 1)                0         ['dense_15[0][0]']            
+                                                                                                  
+ tf.math.multiply_6 (TFOpLa  (None, 37, 128)              0         ['layer_normalization_7[0][0]'
+ mbda)                                                              , 'softmax[0][0]']            
+                                                                                                  
+ tf.math.reduce_sum (TFOpLa  (None, 128)                  0         ['tf.math.multiply_6[0][0]']  
+ mbda)                                                                                            
+                                                                                                  
+ dropout_11 (Dropout)        (None, 128)                  0         ['tf.math.reduce_sum[0][0]']  
+                                                                                                  
+ dense_16 (Dense)            (None, 64)                   8256      ['dropout_11[0][0]']          
+                                                                                                  
+ dropout_12 (Dropout)        (None, 64)                   0         ['dense_16[0][0]']            
+                                                                                                  
+ emotion (Dense)             (None, 6)                    390       ['dropout_12[0][0]']          
+                                                                                                  
+==================================================================================================
+Total params: 1470115 (5.61 MB)
+Trainable params: 1468643 (5.60 MB)
+Non-trainable params: 1472 (5.75 KB)
+__________________________________________________________________________________________________

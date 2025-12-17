@@ -1,0 +1,12 @@
+model: Conformer V3.1
+description: Lower smoothing/noise/dropout compared to V3
+epochs: 100
+batch_size: 64
+initial_lr: 0.0008
+weight_decay: 0.0002
+mixup_alpha: 0.2
+label_smoothing: 0.05
+focal_gamma: 2.0
+dropout_rates: 0.15/0.2/0.3/0.2
+l2_reg: 5e-05
+n_classes: 6
