@@ -134,6 +134,3 @@ Open `Stage 1/ConformerV3.1.ipynb` for Log-Mel feature extraction and training.
 * **Pre-trained Models**: Microsoft WavLM and Facebook Wav2Vec 2.0 via Hugging Face.
 
 ---
-
-**Author**: Elios
-**Last Update**: December 2025
